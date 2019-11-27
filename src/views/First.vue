@@ -1,48 +1,49 @@
 <template>
 	<div class="first">
 		<div class="main" :style="'transform: translateZ('+nowTranslateZ.toString()+'PX);'"
-			v-hammer:swipe="swipeEvent"
-			v-hammer:tap="stop"
+						v-hammer:swipe="swipeEvent"
+						v-hammer:tap="stop"
 		>
 			<first-child :index="1"
-				:x_distance="x_distance"
-				:z_distance="z_distance"
-				:childStyle="'background-image: url('+require('../assets/demo.png') +');'">
+							:x_distance="x_distance"
+							:z_distance="z_distance"
+							:childStyle="'background-image: url('+require('../assets/demo.png') +');'">
 			</first-child>
 			<first-child :index="2"
-				:x_distance="x_distance"
-				:z_distance="z_distance"
-				:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
+							:x_distance="x_distance"
+							:z_distance="z_distance"
+							:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
 			<first-child :index="3"
-				:x_distance="x_distance"
-				:z_distance="z_distance"
-				:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
+							:x_distance="x_distance"
+							:z_distance="z_distance"
+							:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
 			<first-child :index="4"
-				:x_distance="x_distance"
-				:z_distance="z_distance"
-				:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
+							:x_distance="x_distance"
+							:z_distance="z_distance"
+							:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
 			<first-child :index="5"
-				:x_distance="x_distance"
-				:z_distance="z_distance"
-				:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
+							:x_distance="x_distance"
+							:z_distance="z_distance"
+							:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
 			<first-child :index="6"
-				:x_distance="x_distance"
-				:z_distance="z_distance"
-				:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
+							:x_distance="x_distance"
+							:z_distance="z_distance"
+							:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
 			<first-child :index="7"
-				:x_distance="x_distance"
-				:z_distance="z_distance"
-				:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
+							:x_distance="x_distance"
+							:z_distance="z_distance"
+							:childStyle="'background-image: url('+require('../assets/demo.png') +');'"></first-child>
 			<first-child :index="8"
-				:x_distance="x_distance"
-				:z_distance="z_distance"
-				:childStyle="'background-image: url('+require('../assets/demo.png') +');'">
+							:x_distance="x_distance"
+							:z_distance="z_distance"
+							:childStyle="'background-image: url('+require('../assets/demo.png') +');'">
 			</first-child>
 		</div>
 	</div>
 </template>
 <script>
     import FirstChild from '../components/FirstChild'
+
     export default {
         data() {
             return {
@@ -53,6 +54,7 @@
                 setInt: null,//定时器
                 x_distance: 0,//各屏间距,x轴
                 z_distance: -200,//各屏间距,z轴
+                firstChildCont: 8
             };
         },
         computed: {},
@@ -60,8 +62,7 @@
         },
         mounted() {
             //let firstChildCont = document.getElementsByClassName('first-child').length;
-            let firstChildCont = 8;
-            let deep = (firstChildCont-1) * Math.abs(this.z_distance);
+            let deep = (this.firstChildCont - 1) * Math.abs(this.z_distance);
             this.setInt = setInterval(() => {
                 if (this.nowStepping > 0 && Math.abs(this.nowTranslateZ - deep) <= 15) {
                     this.nowTranslateZ = deep;
@@ -101,7 +102,13 @@
 
             },
             stop() {
-                this.nowStepping = 0;
+                let deep = (this.firstChildCont - 1) * Math.abs(this.z_distance);
+                if (this.nowTranslateZ === deep) {
+                    this.$router.replace('/test')
+                } else {
+                    this.nowStepping = 0;
+                }
+
             }
         },
         components: {

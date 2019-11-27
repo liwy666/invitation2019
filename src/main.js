@@ -28,10 +28,4 @@ new Vue({
     router,
     store,
     render: h => h(App),
-    template: `
-    <div>
-      <h5-audio-controls
-        src: 'https:mate.ganglonggou.com/lib/music/invitation2019_music.mp3'
-      />
-    </div>`,
 }).$mount('#app');
