@@ -1,32 +1,70 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+	<div id="app">
+		<music></music>
+		<transition name="main-router"
+			:enter-active-class="'animated '+transitionClassName.enter"
+			:leave-active-class="'animated '+transitionClassName.leave">
+			<router-view/>
+		</transition>
+	</div>
 </template>
+<script>
+	import music from './components/Music'
+    export default {
+        data() {
+            return {
+                transitionClassName: {
+                    enter: "bounceInUp",
+                    leave: "fadeOutUpBig"
+                }
+            };
+        },
+        watch: {
+            '$route'(to, from) {
+                if (to.query.intoTime && parseInt(to.query.intoTime) < parseInt(from.query.intoTime)) {
+                    this.transitionClassName = {
+                        enter: "bounceInDown",
+                        leave: "fadeOutDownBig"
+                    }
+                } else {
+                    this.transitionClassName = {
+                        enter: "bounceInUp",
+                        leave: "fadeOutUpBig"
+                    }
+                }
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+            }
+        },
+        mounted() {
+            document.body.addEventListener('touchmove', function (e) {
+                e.preventDefault();
+            }, {
+                passive: false
+            });
+        },
+        components:{
+            'music':music,
+		}
     }
-  }
-}
+</script>
+<style lang="scss">
+	#app {
+		overflow: hidden;
+		width: 375px;
+		height: 650px;
+		background:url("./assets/background.jpg") no-repeat 0 0;
+		background-size: 100% 100%;
+		//-webkit-overflow-scrolling: touch;
+	}
+	body{
+		background:url("./assets/background.jpg") no-repeat 0 0;
+		//background-size: 100% 100%;
+	}
+	.main-router-leave-to {
+		position: absolute;
+	}
+
+	.main-router-enter {
+		position: absolute;
+	}
 </style>
