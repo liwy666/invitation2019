@@ -15,12 +15,14 @@
             index: Number,
             x_distance: Number,//各屏间距,x轴
             z_distance: Number,//各屏间距,z轴
+            y_distance: Number,//各屏间距,z轴
         },
-        computed: {
-        },
+        computed: {},
         created() {
             this.myChildStyle = this.childStyle;
-            this.myChildStyle += 'transform: translate3d(' + ((this.index - 1) * this.x_distance).toString() + 'px,0,' + ((this.index - 1) * this.z_distance).toString() + 'px);';
+            this.myChildStyle += 'transform: translate3d(' + ((this.index - 1) * this.x_distance).toString()
+                + 'px,' + ((this.index - 1) * this.y_distance).toString()
+                + 'px,' + ((this.index - 1) * this.z_distance).toString() + 'px);';
             this.myChildStyle += 'z-index:' + this.index + ';';
         },
         methods: {},
